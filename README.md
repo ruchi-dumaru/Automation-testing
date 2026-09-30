@@ -1,3 +1,6 @@
+- `https://www.demoblaze.com/`
+- `https://www.nopcommerce.com/en/register` 
+
 ```
 npm init playwright@latest
 npm playwright -v
@@ -8,6 +11,10 @@ npm playwright -v
 npx playwright codegen (auto code generated without automatic file build in vs code)
 npx playwright codegen -o test/mytest.spec.js (auto script generated which automatically build file in vs code and can run test directly)
 npx playwright codegen --help
+npx playwright codegen --target java
+npx playwright codegen --browser chromium
+npx playwright codegen --device 'iPhone 17'
+npx playwright codegen --viewport -size "1280,720"
 ```
 
 ## Commands 
@@ -33,26 +40,60 @@ npx playwright codegen --help
 
 # Locate single  element
 - link.button
-   - await page.locator('locator').click()
-   - await page.click('locator');
+   - await locator.locator('locator').click()
+   - await locator.click('locator');
 
 - input box
-   - await page.Locator('locator').fill('value')
-   - await page.locator('locator').type('value')
+   - await locator.Locator('locator').fill('value')
+   - await locator.locator('locator').type('value')
 
-   - await page.fill ('locator','value')
-   - await page.type ('locator','value')
+   - await locator.fill ('locator','value')
+   - await locator.type ('locator','value')
 
 
 # Locate multiple web elements
-- const elements=await page.$$(locator)   
+- const elements=await locator.$$(locator)   
 - []
 
-# Built in Locatorspage.getByRole() to locate by explicit and implicit accessibility attributes.
-- page.getByText() to locate by text content.
-- page.getByLabel() to locate a form control by associated label's text.
-- page.getByPlaceholder() to locate an input by placeholder.
-- page.getByAltText() to locate an element, usually image, by its text alternative.
-- page.getByTitle() to locate an element by its title attribute.
-- page.getByTestId() to locate an element based on its data-testid attribute (other attributes can be configured).
+# Built in Locatorslocator.getByRole() to locate by explicit and implicit accessibility attributes.
+- locator.getByText() to locate by text content.
+- locator.getByLabel() to locate a form control by associated label's text.
+- locator.getByPlaceholder() to locate an input by placeholder.
+- locator.getByAltText() to locate an element, usually image, by its text alternative.
+- locator.getByTitle() to locate an element by its title attribute.
+- locator.getByTestId() to locate an element based on its data-testid attribute (other attributes can be configured).
 
+
+## Assertions
+- Playwright inlcuded test assertions in the form of expect funciton.
+
+- expect(page).toHaveURL()  Page has URL
+    - expect(page).not.toHaveURL()
+- expect(page).toHaveTitle()  Page has title
+
+- expect(locator).toBeVisible() Element is visible
+- expect(locator).toBeEnabled() Control is enabled
+- expect(locator).toBeDisabled() Element is disabled
+- expect(locator).toBeChecked() Radio/Checkbox is checked
+- expect(locator).toHaveAttribute()  Element has attribute
+- expect(locator).toHaveText()  Element has text
+- expect(locator).toContainText()  Element contains text
+- expect(locator).toHaveValue(value) Input has value
+- expect(locator).toHaveCount() List of elememts has given length
+
+
+# Types of Assertions 
+ - Hard assertions:if it fails ,it will terminate the program
+ - Soft assertions: if it fails,it will not terminate program instead it will execute remaining code
+
+ 
+# Example
+
+- | Method               | Meaning                                               |
+- | -------------------- | ----------------------------------------------------- |
+- | `.check()`           | Radio/checkbox **select/check** garne action          |
+- | `.isChecked()`       | Current state herera **true/false return** garne      |
+- | `.toBeChecked()`     | Radio/checkbox **checked cha ki chaina verify** garne |
+- | `.not.toBeChecked()` | **checked chaina** bhanera verify garne               |
+- | `.toBeTruthy()`      | Value truthy cha ki chaina verify                     |
+- | `.toBeFalsy()`       | Value falsy cha ki chaina verify                      |
